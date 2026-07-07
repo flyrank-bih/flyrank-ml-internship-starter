@@ -1,0 +1,52 @@
+name: data-path-smoke
+
+# Executes notebook 03 against the real hosted release so the weeks-3+ path
+# can never silently break. Needs the HF_TOKEN repo secret (read-only token);
+# skips cleanly where the secret is unavailable (e.g. forks).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "notebooks/03_working_with_the_full_release.ipynb"
+      - "requirements.txt"
+      - ".github/workflows/data-path-smoke.yml"
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC — catches upstream drift weekly
+  workflow_dispatch:
+
+jobs:
+  run-notebook-03:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Skip if no token (forks)
+        id: gate
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No HF_TOKEN secret — skipping data-path smoke."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install
+        if: steps.gate.outputs.skip == 'false'
+        run: |
+          pip install -r requirements.txt
+          pip install nbformat nbclient ipykernel
+      - name: Execute notebook 03 against the live release
+        if: steps.gate.outputs.skip == 'false'
+        run: |
+          python - <<'PY'
+          import nbformat
+          from nbclient import NotebookClient
+          nb = nbformat.read("notebooks/03_working_with_the_full_release.ipynb", as_version=4)
+          NotebookClient(nb, timeout=1500, kernel_name="python3").execute()
+          print("notebook 03 executed clean against the hosted release")
+          PY

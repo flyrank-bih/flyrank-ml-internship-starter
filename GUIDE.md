@@ -9,6 +9,7 @@ what you may edit, how the pieces connect, and where your own work goes.
 |---|---|---|
 | `README.md` | Front door: quickstart + safety summary | Read once |
 | `GUIDE.md` | This file | Read once, revisit when unsure |
+| `SETUP.md` | GitHub + Colab (Week 1) and Hugging Face access (Week 3) — with the silent pitfalls | Follow it at those two moments |
 | `DATA_USE.md` | The data rules you agree to by working here | **Read before touching the data** |
 | `LICENSE` | MIT — covers the **code** only; the data is governed by `DATA_USE.md` | Reference |
 | `data/raw/content_refresh_anonymized.csv` | The one dataset that ships here: 30,000 pseudonymized pages × 44 columns | **Read-only.** Never add files under `data/` |
@@ -24,7 +25,7 @@ what you may edit, how the pieces connect, and where your own work goes.
 | `docs/ml-core-foundation-framework.md` | The ML-as-a-system map behind the live sessions | Reference |
 | `docs/intern-free-tooling-guide.md` | The zero-budget tool stack | Reference |
 | `.github/workflows/smoke-test.yml` | CI: re-runs the whole pipeline and fails if any dataset CSV is committed | Keep it green |
-| `requirements.txt` | pandas, numpy, scikit-learn, matplotlib, reportlab | `pip install -r requirements.txt` |
+| `requirements.txt` | pandas, numpy, scikit-learn, matplotlib, reportlab, duckdb, huggingface_hub | `pip install -r requirements.txt` |
 
 ## 2. How the pipeline fits together
 
@@ -78,16 +79,29 @@ artifacts don't.**
 | Weeks 3+ | Learn the full-release workflow (DuckDB over ~79M hosted rows), then your lane | `notebooks/03_working_with_the_full_release.ipynb`, then `work/` (copy pipeline pieces in, don't edit `scripts/`) |
 | Capstone | Your `work/` folder **is** the deliverable: code, figures, and `capstone_report.md` | `work/` |
 
+**Do I make my own notebook?** Weeks 1-3: no — run the three provided ones and do the "your
+turn" cells (save copies to your repo). Capstone and lane work: **yes** — your own notebooks in
+`work/notebooks/`, starting with the setup cell from section 5.
+
 Weekly assignments, live events, and the grading rubric live on the **InternHQ board** —
 this repo is the technical foundation they all build on.
 
 ## 5. Build & submit flow
 
-1. Clone this repo, then push it to **your own public GitHub repo** — that's your workspace,
-   your submission, and your portfolio.
+1. Make your own copy: **Use this template → Create a new repository** (public) on the repo
+   page — that copy is your workspace, your submission, and your portfolio. (Prefer the
+   terminal? `git clone` this repo and push it to an **empty** repo you own — no README tick,
+   or the push is rejected.)
 2. Share your repo URL as part of **Assignment 1** on the InternHQ board. That's the only thing
    you ever hand over during the track — nothing gets uploaded to the platform.
-3. Build everything in `work/`. Keep `scripts/` pristine.
+3. Build everything in `work/`. Keep `scripts/` pristine. **Every new notebook you create
+   (weeks 3+) should start with one setup cell:**
+   ```python
+   %pip install -q duckdb huggingface_hub pandas scikit-learn matplotlib
+   ```
+   A fresh Colab/Jupyter kernel doesn't have `duckdb` until you install it in the notebook.
+   And **never hardcode your Hugging Face token in a cell** — your repo is public. Use
+   `getpass` or Colab's Secrets (🔑) panel; leaked tokens get auto-revoked, but don't test it.
 4. Keep CI green: it re-runs the pipeline and **fails if any dataset CSV is committed** —
    your fork inherits that protection.
 5. Review happens **once, at the end of the track**: after your capstone we go through every
@@ -103,10 +117,13 @@ Working in Colab? *File → Save a copy in GitHub* (into your repo) after each s
 By design — see section 3. Generated artifacts regenerate; datasets never enter git. Your
 findings belong in your report and figures, not in committed data files.
 
-**My numbers differ from the committed report in the last decimal places.**
-Floating-point noise across machines. The headline metrics should reproduce exactly
-(baseline Precision@50 = 0.240, random forest = 0.740); tiny last-digit differences in raw
-score columns are normal.
+**My numbers differ from the committed report.**
+The baseline (Precision@50 = 0.240) reproduces exactly. The random-forest number is
+**library-version sensitive**: 0.740 on the stack we ship, but roughly 0.68–0.74 across
+older numpy/scikit-learn combinations — the picks at the 50th-place boundary shift.
+The stable claim is the **~3x lift over the baseline**, not the third decimal. If you see
+0.68-ish, your environment resolved older libraries; `pip install -r requirements.txt` in a
+fresh venv gets you the shipped stack.
 
 **"Raw input not found" when running the pipeline.**
 The starter CSV was deleted or moved. Restore it:

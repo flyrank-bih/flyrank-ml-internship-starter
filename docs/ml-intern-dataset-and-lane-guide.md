@@ -66,14 +66,16 @@ The internship data is the warehouse-shaped release below, plus the small runnab
 
 Warehouse-shaped release (mentor-provided):
 
-- Release: `flyrank_pseudonymized_warehouse_release_v20260703` (request from your mentor)
+- Release: [`FlyRank/internship-warehouse`](https://huggingface.co/datasets/FlyRank/internship-warehouse) on Hugging Face (gated — request access, accept the data-use terms, instant approval; notebook 03 shows the DuckDB workflow). Build `flyrank_pseudonymized_warehouse_release_v20260703`.
 - Source: `central_data_warehouse`
 - Export date: `2026-06-23`
-- Freshness lag: 3 days, so daily/time-series facts stop at `2026-06-20`
+- Freshness lag: 3 days from the export date (2026-07-03), so daily/time-series facts stop at `2026-06-30`
 - Chunk size: 10,000 rows per CSV part
 - Hash salt source: private ignored file
 - Hash salt fingerprint: `7912504bb27e489b`
 - Validation result: 0 blocking issues, 0 warnings
+
+> **Iterating on features?** Develop against `fact_content_daily_performance_sample` (the latest full month, 11.7M rows) and run the full fact table only for your final pass — hammering the full table repeatedly can hit Hugging Face rate limits (HTTP 429).
 
 For student work, cite only the approved release counts and date windows below.
 
@@ -92,10 +94,13 @@ For student work, cite only the approved release counts and date windows below.
 
 The warehouse-shaped release gives you dimensional and fact tables; you define your own joins, windows, labels, and leakage checks.
 
-Approved warehouse-shaped release (mentor-provided):
+Approved warehouse-shaped release — hosted at
+[`FlyRank/internship-warehouse`](https://huggingface.co/datasets/FlyRank/internship-warehouse)
+(gated; Parquet; see notebook 03). Lane example cuts:
+[`FlyRank/internship-lanes`](https://huggingface.co/datasets/FlyRank/internship-lanes). Build id:
 
 ```text
-flyrank_pseudonymized_warehouse_release_v20260703/   (request from your mentor)
+flyrank_pseudonymized_warehouse_release_v20260703
 ```
 
 | Table | Rows | Grain | Main use |

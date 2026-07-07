@@ -123,7 +123,7 @@ def main() -> None:
     })
 
     print(f"Wrote baseline queue: {output_path}")
-    print(f"Top-50 declining rate: {out.head(50)['is_declining_label'].mean():.3f}")
+    print(f"Top-50 declining rate (full data, not the evaluated holdout Precision@50): {out.head(50)['is_declining_label'].mean():.3f}")
 
 
 if __name__ == "__main__":

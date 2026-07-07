@@ -54,6 +54,9 @@ environment (`pip freeze` highlights or `requirements.txt` deltas).
 ---
 
 > **Claims checklist before submitting:** observed / measured / directional / decision-support
+> **Metrics vs. base rate:** report your task's base rate (majority-class %) next to any
+> precision@K or accuracy — a high score can just be a high base rate. AUC / lift over
+> baseline are the honest discrimination numbers.
 > language everywhere · no causal claims without an experiment or causal design · no
 > "predicted Google's algorithm" · no client-identifying details · numbers in this report
 > match a fresh re-run.
