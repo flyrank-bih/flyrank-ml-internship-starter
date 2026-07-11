@@ -36,19 +36,20 @@ mirrors the eight axes your work is graded on, so writing it early keeps you hon
 ## Your assignment index
 
 Your skeleton notebooks are already in `notebooks/` — one per assignment, pre-named.
-Tick them off as you go; this table is the map of your work:
+Tick them off as you go; this table is the map of your work (each badge opens the notebook
+in Colab, straight from your repo):
 
-| Notebook | Assignment | Status |
-|---|---|---|
-| `notebooks/w01_research_question.ipynb` | ML-02 | ☐ |
-| `notebooks/w02_ml_task_framing.ipynb` | ML-03 | ☐ |
-| `notebooks/w03_data_contract.ipynb` | ML-04 | ☐ |
-| `notebooks/w03_feature_leakage_check.ipynb` | ML-05 | ☐ |
-| `notebooks/w04_signal_audit.ipynb` | ML-06 | ☐ |
-| `notebooks/w04_baseline_score.ipynb` | ML-07 | ☐ |
-| `notebooks/w05_model.ipynb` | ML-08 | ☐ |
-| `notebooks/w06_validation_audit.ipynb` | ML-09 | ☐ |
-| `notebooks/w07_action_playbook.ipynb` | ML-10 | ☐ |
-| `notebooks/capstone.ipynb` | ML-11 (the paper mirrors it) | ☐ |
+| Notebook | Assignment | Open | Status |
+|---|---|---|---|
+| `notebooks/w01_research_question.ipynb` | ML-02 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w01_research_question.ipynb) | ☐ |
+| `notebooks/w02_ml_task_framing.ipynb` | ML-03 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w02_ml_task_framing.ipynb) | ☐ |
+| `notebooks/w03_data_contract.ipynb` | ML-04 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w03_data_contract.ipynb) | ☐ |
+| `notebooks/w03_feature_leakage_check.ipynb` | ML-05 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w03_feature_leakage_check.ipynb) | ☐ |
+| `notebooks/w04_signal_audit.ipynb` | ML-06 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w04_signal_audit.ipynb) | ☐ |
+| `notebooks/w04_baseline_score.ipynb` | ML-07 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w04_baseline_score.ipynb) | ☐ |
+| `notebooks/w05_model.ipynb` | ML-08 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w05_model.ipynb) | ☐ |
+| `notebooks/w06_validation_audit.ipynb` | ML-09 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w06_validation_audit.ipynb) | ☐ |
+| `notebooks/w07_action_playbook.ipynb` | ML-10 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w07_action_playbook.ipynb) | ☐ |
+| `notebooks/capstone.ipynb` | ML-11 (the paper mirrors it) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/capstone.ipynb) | ☐ |
 
 When your paper is deployed, put its exact URL in `../submission/paper_url.txt` (one line).

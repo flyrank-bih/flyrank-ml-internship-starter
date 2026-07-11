@@ -22,22 +22,33 @@ breaks it — read the ⚠️ lines even if you skip everything else.
    leak-guard that keeps datasets out of git — all of it travels with you.
    ⚠️ Don't create an empty repo by hand instead — an empty repo has no branch, and Colab's
    *Save in GitHub* **silently does nothing** against it (the dialog just closes).
-3. **Open Notebook 01** with the Colab badge in the README. It runs in your browser; nothing
-   to install. (The badge opens the shared read-only notebook no matter whose README you
-   clicked it in — your work becomes yours at the save step below.)
-4. **Save your work**: *File → Save a copy in GitHub* → authorize Colab (pick the **same
-   account** that owns your copy) → in the Repository dropdown **switch to YOUR copy** (it
-   defaults to the shared repo, which you can't write to) → keep the suggested
-   `notebooks/...` path, branch `main` → OK. Colab opens the commit on GitHub — that's your
-   proof it worked.
+3. **Give it ~30 seconds, then refresh your new repo's page.** A tiny automatic commit
+   ("Point Colab badges at this copy") lands right after creation — it rewires every Colab
+   badge in YOUR copy so notebooks open from your repo, with your saved work, and save back
+   to it with everything pre-filled.
+   ⚠️ Always click badges in **your** copy's README, not on the shared starter page — the
+   shared page's badges open read-only previews you can't save to directly.
+4. **Open Notebook 01** with its Colab badge in **your** README. It runs in your browser;
+   nothing to install.
+5. **Save your work**: *File → Save a copy in GitHub* → authorize Colab (pick the **same
+   account** that owns your copy) → the dialog is already pre-filled with your repo, the
+   right path, and branch `main` → **OK**. Colab opens the commit on GitHub — that's your
+   proof it worked. Leave "Include a link to Colaboratory" ticked — it keeps an open-in-Colab
+   badge at the top of the saved notebook.
    ⚠️ Colab can only see repos of the GitHub account that authorized it. If your repo
    "doesn't appear," you authorized a different account.
-5. **Also**: *File → Save a copy in Drive* — a personal backup so a closed tab never eats an
+6. **Also**: *File → Save a copy in Drive* — a personal backup so a closed tab never eats an
    hour of work. Never submitted, just yours.
 
 **✅ Done when:** the executed notebook shows up in your copy on github.com. That
 **`github.com/you/your-repo`** URL is your submission for Assignment 1 — never a
 `colab.research.google.com` or `drive.google.com` link.
+
+**Badges opening the shared repo instead of yours?** (You made your copy before the badge
+rewiring existed, or Actions is turned off on your repo.) Use Colab's built-in opener — same
+result, two more clicks: **File → Open notebook → GitHub tab** → paste
+`github.com/you/your-repo` → pick the notebook. Save is pre-filled exactly the same way, and
+Colab's **Recent** tab remembers it from then on.
 
 ---
 

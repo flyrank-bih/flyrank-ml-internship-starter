@@ -30,6 +30,36 @@ The fastest path is Google Colab (one click, zero install). Open Notebook 1 and 
  **Weeks 3+ — The full release (~79M rows) via DuckDB, no download needed** — hosted at
  [`FlyRank/internship-warehouse`](https://huggingface.co/datasets/FlyRank/internship-warehouse) (gated: request access + accept the data-use terms, approval is instant)
 
+---
+
+## Your assignment notebooks — open, fill, save, done
+
+Every assignment is one pre-named skeleton notebook in `work/notebooks/`. Click its badge,
+fill the sections in order, then **File → Save a copy in GitHub → OK** — the dialog is
+already pre-filled with your repo and the right path.
+
+> **The badges know whose repo they're in.** About 30 seconds after you create your copy, an
+> automatic commit ("Point Colab badges at this copy") rewires every badge in it to open
+> **your** notebooks — with your saved work — instead of the shared read-only ones. Reading
+> this on the shared starter page? The badges below open blank previews; make your copy
+> first ([SETUP.md](SETUP.md), Moment 1).
+
+| Week | Card | Notebook | Open |
+|---|---|---|---|
+| 1 | ML-02 | `w01_research_question` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w01_research_question.ipynb) |
+| 2 | ML-03 | `w02_ml_task_framing` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w02_ml_task_framing.ipynb) |
+| 3 | ML-04 | `w03_data_contract` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w03_data_contract.ipynb) |
+| 3 | ML-05 | `w03_feature_leakage_check` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w03_feature_leakage_check.ipynb) |
+| 4 | ML-06 | `w04_signal_audit` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w04_signal_audit.ipynb) |
+| 4 | ML-07 | `w04_baseline_score` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w04_baseline_score.ipynb) |
+| 5 | ML-08 | `w05_model` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w05_model.ipynb) |
+| 6 | ML-09 | `w06_validation_audit` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w06_validation_audit.ipynb) |
+| 7 | ML-10 | `w07_action_playbook` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/w07_action_playbook.ipynb) |
+| 8 | ML-11 | `capstone` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter/blob/main/work/notebooks/capstone.ipynb) |
+
+Badges not opening *your* copy? Colab's built-in opener always works: **File → Open notebook
+→ GitHub tab** → paste `github.com/you/your-repo` → pick the notebook.
+
 ### Prefer local?
 
 ```bash
@@ -107,7 +137,8 @@ build on — and the `skills/` folder here is the instruction library for your A
 1. A free account at github.com.
 2. Your own copy of this repo: **Use this template → Create a new repository** → public.
    (One click — brings the notebooks, `work/`, and the CI leak-guard with it.)
-3. In Colab: *File → Save a copy in GitHub* → pick your copy, branch `main` (Colab handles auth).
+3. In Colab: *File → Save a copy in GitHub* — opened from your copy's badges, the dialog is
+   already pre-filled with your repo and path, so it's just OK (Colab handles auth).
 4. That's your submission repo — share its **github.com/you/your-repo** URL with Assignment 1
    (never a colab.research.google.com or drive.google.com link).
 

@@ -1,0 +1,45 @@
+name: personalize
+
+# Runs in copies made with "Use this template": rewrites every Colab badge so
+# notebooks open from — and save back to — YOUR repo, with the save dialog
+# pre-filled. Skipped on the shared starter repo; a no-op on every push after
+# the rewrite has happened. The rewrite commit carries [skip ci] so it does
+# not trigger a smoke-test run of its own.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  point-badges-at-this-copy:
+    if: github.repository != 'flyrank-bih/flyrank-ml-internship-starter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rewrite Colab badge URLs to this repository
+        env:
+          THIS_REPO: ${{ github.repository }}
+        run: |
+          set -e
+          CANON='colab.research.google.com/github/flyrank-bih/flyrank-ml-internship-starter'
+          MINE="colab.research.google.com/github/${THIS_REPO}"
+          # Badge URLs live only in markdown and notebooks. .github/ is excluded on
+          # purpose: workflow files must never be touched (the Actions token cannot
+          # push workflow changes, and this file mentions the shared repo by name).
+          files=$(grep -rl "$CANON" . --include='*.md' --include='*.ipynb' --exclude-dir=.github || true)
+          if [ -z "$files" ]; then
+            echo "Badges already point at ${THIS_REPO} — nothing to do."
+            exit 0
+          fi
+          echo "$files" | while IFS= read -r f; do
+            sed -i "s|$CANON|$MINE|g" "$f"
+            echo "personalized: $f"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Point Colab badges at this copy [skip ci]"
+          git push

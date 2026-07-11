@@ -25,6 +25,7 @@ what you may edit, how the pieces connect, and where your own work goes.
 | `docs/ml-core-foundation-framework.md` | The ML-as-a-system map behind the live sessions | Reference |
 | `docs/intern-free-tooling-guide.md` | The zero-budget tool stack | Reference |
 | `.github/workflows/smoke-test.yml` | CI: re-runs the whole pipeline and fails if any dataset CSV is committed | Keep it green |
+| `.github/workflows/personalize.yml` | Runs once right after you create your copy: points every Colab badge at YOUR repo | Automatic — nothing to do |
 | `requirements.txt` | pandas, numpy, scikit-learn, matplotlib, reportlab, duckdb, huggingface_hub | `pip install -r requirements.txt` |
 
 ## 2. How the pipeline fits together
@@ -108,8 +109,10 @@ this repo is the technical foundation they all build on.
    portal — and at the end you submit the capstone the same way, with your deployed paper's URL
    in `submission/paper_url.txt` inside the repo. That's the whole journey.
 
-Working in Colab? *File → Save a copy in GitHub* (into your repo) after each session, and
-*File → Save a copy in Drive* so the session doesn't evaporate.
+Working in Colab? *File → Save a copy in GitHub* after each session — opened from your
+copy's badges, the dialog comes pre-filled (repo, path, branch), so saving is one OK. Also
+*File → Save a copy in Drive* so the session doesn't evaporate. Badges acting up? *File →
+Open notebook → GitHub tab* → your repo — see `SETUP.md`, Moment 1.
 
 ## 6. Working with an AI assistant
 
