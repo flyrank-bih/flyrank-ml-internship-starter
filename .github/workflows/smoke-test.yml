@@ -52,6 +52,25 @@ jobs:
           fi
           echo "No leaked datasets."
 
+      - name: Warn on committed work notebooks with no outputs (unrun copies)
+        run: |
+          python3 - <<'EOF'
+          # Warn-only: a filled-in work notebook committed with zero outputs usually means
+          # Colab saved an unrun copy. Fresh skeletons (empty code cells) stay silent.
+          import json, glob
+          for p in sorted(glob.glob("work/notebooks/*.ipynb")):
+              try:
+                  nb = json.load(open(p))
+              except Exception:
+                  continue
+              code = [c for c in nb.get("cells", []) if c.get("cell_type") == "code"]
+              src = sum(len("".join(c.get("source", []))) for c in code)
+              has_out = any(c.get("outputs") for c in code)
+              if code and src > 200 and not has_out:
+                  print(f"::warning file={p}::{p} has filled code cells but no outputs - "
+                        "did Colab save an unrun copy? Runtime -> Run all, then save again.")
+          EOF
+
       - name: Check submission/paper_url.txt format
         run: |
           f=submission/paper_url.txt

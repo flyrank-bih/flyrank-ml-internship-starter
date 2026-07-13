@@ -34,7 +34,7 @@ content item, 32 clients, trailing-90-day metrics. Full column reference: `docs/
 | `dim_clients` | 104 | one per pseudonymized client |
 | `dim_content` | 519,606 | one per content item |
 | `fact_content_daily_performance` | 78,835,655 | report_date × client × content (partitioned by month) |
-| `fact_content_daily_performance_sample` | ~11.7M | same grain — careful: this is just the LAST month (June 2026), not a random sample. If your project predicts "what happens next", June is probably your answer key — don't practice on the answer key. Use a middle month instead |
+| `fact_content_daily_performance_sample` | ~11.7M | same grain — the FINAL MONTH (June 2026) only; fine for query mechanics, NEVER for label logic |
 | `fact_content_query_90d` | 2,414,248 | client × content × query hash, fixed 90-day window |
 
 Dates: 2025-01-27 → 2026-06-30 (~17 months). Position column is `gsc_avg_position`.
@@ -43,22 +43,19 @@ Dates: 2025-01-27 → 2026-06-30 (~17 months). Position column is `gsc_avg_posit
 - History depth differs wildly per client — check `dim_clients.gsc_data_start` before defining
   any time window; prefer per-client windows over one global calendar window.
 - Rows before a client's `ga4_data_start` have GA4 columns zero-FILLED with
-  `ga4_data_available = FALSE` — those zeros mean "not measured", not "no engagement".
-  One more trap: the flag isn't just TRUE/FALSE — millions of rows have it NULL (empty).
-  Always filter with `ga4_data_available IS TRUE`; writing `= FALSE` or `NOT flag` quietly
-  gives wrong counts, because NULL is neither. Same rule for the GSC flag and the client
-  access flags in `dim_clients` (10 clients are NULL there).
+  `ga4_data_available = FALSE` — filter on the flag; zeros there are not "no engagement".
 - A third of clients have little or no usable search/analytics history — expect to filter.
 - The query table's per-content context columns repeat on every row: `ANY_VALUE()` them, never
   `SUM()`. Its 90-day window overlaps the snapshot's final months — if your label lives in the
   last 30 days, only `*_prev30`-style columns are safe features (window alignment first!).
 
-**Access + iteration rules:** request gate access once (instant), READ token via getpass or
-Colab Secrets — never pasted in a cell (public repo!). While you experiment, query ONE month
-from the middle of the data (e.g. `month=2026-03`) — cheap and fast. Don't experiment on the
-`_sample` table: it is the final month, and for most projects that month is the "future" your
-model gets graded on. Run the full 79M scan only ONCE, when your query is final, and cache the
-result to `work/outputs/`. Repeated full scans hit HTTP 429 rate limits.
+**Access + iteration rules:** request gate access once (instant), READ token via Colab
+Secrets (`HF_TOKEN`) or env var — never pasted in a cell (public repo!). Iterate on a
+**mid-panel month partition** (e.g. `month=2026-03`), not the `_sample`: the `_sample` is the
+panel's LAST month, i.e. the natural outcome window of any past→future label — develop label
+logic there and you are developing inside your own test window. Treat the final month as a
+sealed test month. Run the full 79M scan ONCE when the query is final and cache the result to
+`work/outputs/`. Repeated full scans hit HTTP 429 rate limits.
 
 ## How to verify
 

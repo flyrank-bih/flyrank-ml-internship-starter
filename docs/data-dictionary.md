@@ -95,13 +95,8 @@ Keep this file open while you work.
 | `word_count_tier` | `<1000`, `1000-2000`, `2000-3500`, `3500+` | Blank when `word_count` is blank |
 | `char_count_tier` | `<8000`, `8000-15000`, `15000-25000`, `25000+` | Blank when `char_count` is blank |
 | `impression_tier` | `no_data`, `none`, `low`, `moderate`, `good`, `excellent` | `no_data` = client has no GSC; `none` = 0; `low` > 0; `moderate` ≥ 300; `good` ≥ 3,000; `excellent` ≥ 30,000 |
-| `position_tier` | `no_data`, `top_3`, `page_1`, `striking`, `page_3_5`, `deep` | avg position ≤ 3 / ≤ 10 / ≤ 20 / ≤ 50 / > 50 |
+| `position_tier` | `no_data`, `top_3`, `page_1`, `striking`, `page_3_5`, `deep` | avg position ≤ 3 / ≤ 10 / ≤ 20 / ≤ 50 / > 50. ⚠️ Tier metrics need a volume floor: this slice's `top_3` stratum has median volume ~53 impressions/90d, where one click moves CTR by ~1.9pp — at warehouse scale positions 1–3 run ≈ 2.78% CTR. Never read a tier median without stating its volume floor |
 | `trend_direction` | `new`, `flat`, `up`, `down`, `stable` | last-30d vs prev-30d impressions: `new` = prev 0 & last > 0; `flat` = both 0; `up` > +20%; `down` < −20%; else `stable`. **Label source — never a feature** |
-
-> **Heads-up about `top_3`:** these pages rank best but most get almost no searches (median: 53
-> impressions in 90 days). With numbers that small, one extra click swings CTR by ~2 percentage
-> points — so a "0.00% CTR" there is small-sample noise, not a broken page. Before comparing any
-> rate, ask: are there enough impressions for this rate to mean anything?
 
 ## Columns the prep step adds (44 → 52 in `refresh_feature_vector.csv`)
 
@@ -140,9 +135,13 @@ Hugging Face (gated; notebook 03 walks through access and the DuckDB workflow).
 1. **Unbalanced panel.** Per-client history depth differs (some clients have 17 months, some 3).
    `dim_clients.gsc_data_start` is the honest per-client start date — always check it before
    defining a time window, and prefer per-client windows over one global calendar window.
-2. **GSC-only early history.** Rows before a client's `ga4_data_start` have GA4 columns
-   zero-filled with `ga4_data_available = FALSE` — filter on the flag, don't treat zeros as
-   "no engagement".
+2. **GSC-only early history — and the flags are THREE-valued.** Rows before a client's
+   `ga4_data_start` have GA4 columns zero-filled with `ga4_data_available = FALSE` — filter on
+   the flag, don't treat zeros as "no engagement". But the flag can also be **NULL** (millions
+   of rows carry `ga4_data_available` NULL with NULL metrics — neither zero-filled nor flagged
+   FALSE, and 10 of 104 clients have NULL access flags in `dim_clients`). `= FALSE` or `NOT …`
+   silently mishandles them: always filter with `IS TRUE` / `IS NOT TRUE` (same for the GSC
+   twin).
 > ⚠️ **Leakage watch — the query table's window overlaps recent months.**
 > `fact_content_query_90d` covers a fixed 90-day window (the most recent ~3 months of the
 > snapshot). If your capstone predicts something about *those* months (e.g. "will this page

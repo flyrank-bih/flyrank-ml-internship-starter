@@ -14,13 +14,13 @@ question to the rows.** Aggregate in SQL, bring back only the small answer, mode
 %pip -q install duckdb
 import duckdb
 con = duckdb.connect()
-# remote Parquet reads like a local table:
-# Look at the dataset's "Files" tab on Hugging Face first — tables ship in two shapes:
-#   a single file:     'hf://datasets/<org>/<name>/<table>.parquet'
-#   a folder of files: 'hf://datasets/<org>/<name>/<table>/**/*.parquet'
-# Using the folder pattern on a single-file table fails with a confusing HTTP 404.
-# ({a,b} brace patterns don't work on hf:// — pass a plain list of paths instead.)
-REL = "read_parquet('hf://datasets/<org>/<name>/<table>/**/*.parquet')"  # match the shape you saw
+# remote Parquet reads like a local table — match the path to how the table ships:
+# most tables are ONE flat file at the repo root:
+REL = "read_parquet('hf://datasets/<org>/<name>/<table>.parquet')"
+# partitioned tables are a directory of month folders:
+REL = "read_parquet('hf://datasets/<org>/<name>/<table>/month=2026-03/*.parquet')"
+# several months: pass an explicit LIST of paths — hf:// does NOT support {brace} globs,
+# and pointing the /**/ glob at a flat-file table fails with an opaque HTTP error.
 small = con.sql(f"""
     SELECT group_col, SUM(metric) AS total, COUNT(*) AS n
     FROM {REL}

@@ -40,7 +40,9 @@ breaks it — read the ⚠️ lines even if you skip everything else.
 6. **Also**: *File → Save a copy in Drive* — a personal backup so a closed tab never eats an
    hour of work. Never submitted, just yours.
 
-**✅ Done when:** the executed notebook shows up in your copy on github.com. That
+**✅ Done when:** the executed notebook shows up in your copy on github.com **and, when you
+open the file there, the cell outputs are visible under the cells.** No outputs means Colab
+saved an unrun copy — back in Colab: **Runtime → Run all**, then save again. That
 **`github.com/you/your-repo`** URL is your submission for Assignment 1 — never a
 `colab.research.google.com` or `drive.google.com` link.
 
